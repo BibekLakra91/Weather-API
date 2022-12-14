@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="weather.js"></script> -->
+    <script type="text/javascript">
+        function show_temp(){
+            city = document.getElementById("city").value;
+            document.getElementById("output").style.color="red";
+            httpRequest = new XMLHttpRequest();
+            url = "https://api.weatherbit.io/v2.0/current?city="+city+"&key=f6e8a15a9a3a473e963ea5f48a0af59a";
+            // https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
+            httpRequest.open("GET",url);
+            httpRequest.send();
+
+            httpRequest.onreadystatechange= function(){
+                if(this.readyState == 4 && this.status == 200){
+                    user_data = JSON.parse(this.responseText);
+                    document.getElementById("output").innerHTML = user_data.data[0].temp;
+                }
+            }
+        }
+    </script>
+    <!-- <link rel="stylesheet" href="weather.css"> -->
+    <title>Weather</title>
+</head>
+<body>
+    <p id = "output">Temp</p>
+    <input type="text" id="city">
+    <button onclick="show_temp()">Submit</button>
+    
+</body>
+</html>
